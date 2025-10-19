@@ -1,0 +1,9 @@
+table th, table td {
+  white-space: nowrap;
+  font-size: 0.9rem; /* réduit légèrement la taille du texte */
+}
+
+.table-responsive {
+  max-width: 100%;
+  overflow-x: auto;
+}

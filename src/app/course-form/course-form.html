@@ -1,0 +1,104 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h3 class="mb-0">
+            {{ isEditMode ? '✏️ Modifier le cours' : '➕ Ajouter un nouveau cours' }}
+          </h3>
+        </div>
+
+        <div class="card-body">
+          <!-- Message d'erreur -->
+          <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>❌ Erreur:</strong> {{ errorMessage }}
+            <button type="button" class="btn-close" (click)="errorMessage = ''"></button>
+          </div>
+
+          <form (ngSubmit)="saveCourse()">
+            <!-- Jour -->
+            <div class="mb-3">
+              <label for="day" class="form-label"><strong>Jour *</strong></label>
+              <select 
+                id="day"
+                class="form-select"
+                [(ngModel)]="course.day"
+                name="day"
+                required>
+                <option value="">-- Sélectionner un jour --</option>
+                <option *ngFor="let day of days" [value]="day">{{ day }}</option>
+              </select>
+            </div>
+
+            <!-- Type -->
+            <div class="mb-3">
+              <label for="type" class="form-label"><strong>Type de cours *</strong></label>
+              <select 
+                id="type"
+                class="form-select"
+                [(ngModel)]="course.type"
+                name="type"
+                required>
+                <option *ngFor="let type of types" [value]="type">{{ type }}</option>
+              </select>
+            </div>
+
+            <!-- Titre -->
+            <div class="mb-3">
+              <label for="title" class="form-label"><strong>Titre du cours *</strong></label>
+              <input 
+                type="text"
+                id="title"
+                class="form-control"
+                [(ngModel)]="course.title"
+                name="title"
+                placeholder="Ex: Règles de prononciation"
+                required>
+            </div>
+
+            <!-- Sourate -->
+            <div class="mb-3">
+              <label for="surah" class="form-label"><strong>Sourate *</strong></label>
+              <input 
+                type="text"
+                id="surah"
+                class="form-control"
+                [(ngModel)]="course.surah"
+                name="surah"
+                placeholder="Ex: Al-Fatiha, Al-Baqarah"
+                required>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+              <label for="description" class="form-label"><strong>Description</strong></label>
+              <textarea 
+                id="description"
+                class="form-control"
+                [(ngModel)]="course.description"
+                name="description"
+                rows="4"
+                placeholder="Décrivez le contenu du cours..."></textarea>
+            </div>
+
+            <!-- Boutons -->
+            <div class="d-flex gap-2">
+              <button 
+                type="submit"
+                class="btn btn-success"
+                [disabled]="isLoading">
+                {{ isLoading ? '⏳ Enregistrement...' : '💾 Enregistrer' }}
+              </button>
+              <button 
+                type="button"
+                class="btn btn-secondary"
+                (click)="cancel()">
+                ❌ Annuler
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

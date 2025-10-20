@@ -37,6 +37,9 @@ export class StudentsList implements OnInit {
       error: (err) => console.error('Erreur lors du chargement des étudiants', err)
     });
   }
+  goToCourses() {
+    this.router.navigate(['/courses']);
+  }
 
   deleteStudent(id: number) {
     if (confirm('Voulez-vous vraiment supprimer cet étudiant ?')) {

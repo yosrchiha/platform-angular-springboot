@@ -1,0 +1,100 @@
+<div class="navbar bg-dark text-light p-3">
+  <ul class="nav">
+    <li class="nav-item">
+      <button class="btn btn-link nav-link text-light" (click)="goToStudents()">
+        🏫 Liste des étudiants
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="btn btn-link nav-link text-light" (click)="goToAddStudent()">
+        ➕ Ajouter un étudiant
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="btn btn-link nav-link text-light" (click)="goToAddCourse()">
+        📖 Ajouter un cours
+      </button>
+    </li>
+  </ul>
+</div>
+
+<div class="container mt-5">
+  <h2 class="text-center mb-4">📚 Gestion des Cours du Coran</h2>
+
+  <!-- Bouton pour ajouter un cours -->
+  <div class="text-end mb-3">
+    <button class="btn btn-primary" (click)="goToAddCourse()">
+      <i class="bi bi-plus-circle"></i> Ajouter un cours
+    </button>
+  </div>
+
+  <!-- Filtrage par jour -->
+  <div class="mb-4">
+    <label class="form-label"><strong>Filtrer par jour:</strong></label>
+    <div class="btn-group" role="group">
+      <button 
+        type="button" 
+        class="btn btn-outline-secondary"
+        [class.active]="selectedDay === ''"
+        (click)="filterByDay('')">
+        Tous les jours
+      </button>
+      <button 
+        *ngFor="let day of days"
+        type="button" 
+        class="btn btn-outline-secondary"
+        [class.active]="selectedDay === day"
+        (click)="filterByDay(day)">
+        {{ day }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Tableau responsive -->
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered shadow-sm">
+      <thead class="table-dark text-center">
+        <tr>
+          <th>ID</th>
+          <th>Jour</th>
+          <th>Type</th>
+          <th>Titre</th>
+          <th>Sourate</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        <tr *ngFor="let course of filteredCourses">
+          <td>{{ course.id }}</td>
+          <td><strong>{{ course.day }}</strong></td>
+          <td>
+            <span [class]="getTypeColor(course.type)">
+              {{ course.type }}
+            </span>
+          </td>
+          <td>{{ course.title }}</td>
+          <td>📖 {{ course.surah }}</td>
+          <td>{{ course.description || '—' }}</td>
+          <td>
+            <button 
+              class="btn btn-warning btn-sm me-2" 
+              [routerLink]="['/edit-course', course.id]">
+              ✏️ Modifier
+            </button>
+            <button 
+              class="btn btn-danger btn-sm" 
+              (click)="deleteCourse(course.id)">
+              🗑️ Supprimer
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Message si la liste est vide -->
+  <div *ngIf="filteredCourses.length === 0" class="alert alert-info text-center mt-3">
+    <i class="bi bi-info-circle"></i> Aucun cours trouvé.
+  </div>
+</div>

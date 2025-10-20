@@ -7,7 +7,8 @@ import { Students } from '../students';
   providedIn: 'root'
 })
 export class StudentsService {
-  private apiUrl = 'http://localhost:8081/api/students_coraan/students';
+  
+private apiUrl = 'http://localhost:8081/api/students_coraan/students';
 
   constructor(private http: HttpClient) {}
 

@@ -1,23 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router'; // ← Ajouté
+import { RouterModule, Router } from '@angular/router'; // ← Router ajouté
 import { Students } from '../students';
 import { StudentsService } from '../services/students'; 
 
 @Component({
   selector: 'app-students-list',
   standalone: true,
-  imports: [CommonModule, RouterModule], // ← Ajouté RouterModule
+  imports: [CommonModule, RouterModule],
   templateUrl: './students-list.html',
-  styleUrls: ['./students-list.css'] // ← correction
+  styleUrls: ['./students-list.css']
 })
 export class StudentsList implements OnInit {
   students_corran: Students[] = [];
 
-  constructor(private studentsService: StudentsService) {}
+  constructor(
+    private studentsService: StudentsService,
+    private router: Router // ← Injection du Router
+  ) {}
 
   ngOnInit(): void {
     this.loadStudents();
+  }
+
+  goToStudents() {
+    this.router.navigate(['/students']);
+  }
+
+  goToAddStudent() {
+    this.router.navigate(['/create-student']);
   }
 
   loadStudents() {
@@ -32,7 +43,7 @@ export class StudentsList implements OnInit {
       this.studentsService.deleteStudent(id).subscribe({
         next: () => {
           alert('Étudiant supprimé avec succès !');
-          this.loadStudents(); // Recharge la liste après suppression
+          this.loadStudents();
         },
         error: (err) => {
           console.error('Erreur suppression:', err);
@@ -42,3 +53,4 @@ export class StudentsList implements OnInit {
     }
   }
 }
+

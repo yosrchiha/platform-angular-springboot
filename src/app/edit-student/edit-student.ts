@@ -1,3 +1,4 @@
+// src/app/edit-student/edit-student.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -9,7 +10,7 @@ import { StudentsService } from '../services/students';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './edit-student.html',
-  styleUrls: ['./edit-student.css']  // <-- ici il faut "styleUrls"
+  styleUrls: ['./edit-student.css']
 })
 export class EditStudent implements OnInit {
   student: any = {};  // nécessaire pour ngModel
@@ -22,28 +23,35 @@ export class EditStudent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
-    this.getStudentById();
+    // récupération de l'id depuis l'URL
+    const paramId = this.route.snapshot.paramMap.get('id');
+    if (paramId) {
+      this.id = Number(paramId);
+      this.getStudentById();
+    } else {
+      console.error('ID étudiant manquant dans l’URL');
+      this.router.navigate(['/students']);
+    }
   }
 
-  getStudentById() {
+  getStudentById(): void {
     this.studentService.getStudentById(this.id).subscribe({
-      next: res => this.student = res,
-      error: err => console.error(err)
+      next: (res: any) => (this.student = res),
+      error: (err: any) => console.error('Erreur récupération étudiant', err)
     });
   }
 
-  onSubmit(): void {  // <-- doit exister pour ngSubmit
-    this.studentService.updateStudent(this.student.id, this.student).subscribe({
+  onSubmit(): void {
+    this.studentService.updateStudent(this.id, this.student).subscribe({
       next: () => {
         alert('Étudiant modifié avec succès !');
-         this.router.navigate(['/students']);
+        this.router.navigate(['/students']);
       },
-      error: err => console.error('Erreur modification étudiant', err)
+      error: (err: any) => console.error('Erreur modification étudiant', err)
     });
   }
 
-  cancel() {  // <-- doit exister pour (click)="cancel()"
-    this.router.navigate(['/students-list']);
+  cancel(): void {
+    this.router.navigate(['/students']);
   }
 }

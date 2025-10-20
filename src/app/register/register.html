@@ -1,0 +1,70 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">📝 Inscription Étudiant</h2>
+
+  <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+
+    <div class="row mb-3">
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Nom" required [(ngModel)]="student.nom" name="nom">
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Prénom" required [(ngModel)]="student.prenom" name="prenom">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col">
+        <input type="number" class="form-control" placeholder="Âge" required [(ngModel)]="student.age" name="age">
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Adresse" [(ngModel)]="student.adresse" name="adresse">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col">
+        <select class="form-select" [(ngModel)]="student.niveau" name="niveau" required>
+          <option value="" disabled selected>Niveau</option>
+          <option value="DEBUTANT">Débutant</option>
+          <option value="INTERMEDIAIRE">Intermédiaire</option>
+          <option value="COMPLET">Complet</option>
+          <option value="AVANCE">Avancé</option>
+        </select>
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Sourate De" [(ngModel)]="student.sourateDe" name="sourateDe">
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Sourate À" [(ngModel)]="student.sourateA" name="sourateA">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col">
+        <input type="email" class="form-control" placeholder="Email" [(ngModel)]="student.email" name="email" required>
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Téléphone" [(ngModel)]="student.telephone" name="telephone">
+      </div>
+      <div class="col">
+        <input type="password" class="form-control" placeholder="Mot de passe" [(ngModel)]="student.password" name="password" required>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Parent Nom" [(ngModel)]="student.parentNom" name="parentNom">
+      </div>
+      <div class="col">
+        <input type="email" class="form-control" placeholder="Parent Email" [(ngModel)]="student.parentEmail" name="parentEmail">
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Parent Téléphone" [(ngModel)]="student.parentTelephone" name="parentTelephone">
+      </div>
+    </div>
+
+    <button class="btn btn-success" type="submit">S’inscrire</button>
+    <button class="btn btn-secondary ms-2" type="button" routerLink="/">Annuler</button>
+  </form>
+</div>
+

@@ -8,7 +8,10 @@ import { EditStudent } from './edit-student/edit-student';
 import { DashboardComponent } from './dashboard/dashboard';
 import { CoursesListComponent } from './cours/cours';
 import { CourseFormComponent } from './course-form/course-form';
+import { StudentCoursesComponent } from './student-courses/student-courses';
+import { AttendanceComponent } from './attendance/attendance';
 
+import { MyAttendanceComponent } from './my-attendance/my-attendance';
 export const routes: Routes = [
   { path: '', redirectTo: 'students', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -18,7 +21,15 @@ export const routes: Routes = [
   { path: 'create-student', component: CreateStudent },
   { path: 'edit-student/:id', component: EditStudent },
   { path: 'courses', component: CoursesListComponent },
-    
+  {
+  path: 'attendance',component:AttendanceComponent},
+  { path: 'my-attendance', component: MyAttendanceComponent },
+
+
+    {
+  path: 'student-courses',
+  component: StudentCoursesComponent
+},
   { path: 'create-course', component: CourseFormComponent },
   { path: 'edit-course/:id', component: CourseFormComponent },
 ];

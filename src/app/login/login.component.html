@@ -1,12 +1,349 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h2>Connexion</h2>
+      <p>Accédez à votre compte</p>
+    </div>
 
-<form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-  <div>
-    <label>Email</label>
-    <input type="email" name="email" [(ngModel)]="credentials.email" required />
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm" class="login-form">
+      <!-- Affichage des erreurs générales -->
+      <div class="alert alert-error" *ngIf="errorMessage">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        {{ errorMessage }}
+      </div>
+
+      <!-- Champ Email -->
+      <div class="form-group">
+        <label for="email">Adresse email</label>
+        <div class="input-wrapper">
+          <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          <input 
+            type="email" 
+            id="email"
+            name="email" 
+            [(ngModel)]="credentials.email" 
+            #email="ngModel"
+            required 
+            email
+            placeholder="exemple@email.com"
+            [class.invalid]="email.invalid && email.touched"
+          />
+        </div>
+        <div class="error-message" *ngIf="email.invalid && email.touched">
+          <span *ngIf="email.errors?.['required']">L'email est requis</span>
+          <span *ngIf="email.errors?.['email']">Format d'email invalide</span>
+        </div>
+      </div>
+
+      <!-- Champ Password -->
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <div class="input-wrapper">
+          <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <input 
+            [type]="showPassword ? 'text' : 'password'" 
+            id="password"
+            name="password" 
+            [(ngModel)]="credentials.password" 
+            #password="ngModel"
+            required 
+            minlength="6"
+            placeholder="••••••••"
+            [class.invalid]="password.invalid && password.touched"
+          />
+          <button 
+            type="button" 
+            class="toggle-password" 
+            (click)="showPassword = !showPassword"
+            tabindex="-1"
+          >
+            <svg *ngIf="!showPassword" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <svg *ngIf="showPassword" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+            </svg>
+          </button>
+        </div>
+        <div class="error-message" *ngIf="password.invalid && password.touched">
+          <span *ngIf="password.errors?.['required']">Le mot de passe est requis</span>
+          <span *ngIf="password.errors?.['minlength']">Minimum 6 caractères requis</span>
+        </div>
+      </div>
+
+      <!-- Options supplémentaires -->
+      <div class="form-options">
+        <label class="checkbox-label">
+          <input type="checkbox" [(ngModel)]="rememberMe" name="rememberMe" />
+          <span>Se souvenir de moi</span>
+        </label>
+        <a href="/forgot-password" class="link">Mot de passe oublié ?</a>
+      </div>
+
+      <!-- Bouton de soumission -->
+      <button 
+        type="submit" 
+        class="btn-submit" 
+        [disabled]="loginForm.invalid || isLoading"
+      >
+        <span *ngIf="!isLoading">Se connecter</span>
+        <span *ngIf="isLoading" class="loading">
+          <svg class="spinner" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="2" x2="12" y2="6"></line>
+            <line x1="12" y1="18" x2="12" y2="22"></line>
+            <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
+            <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
+            <line x1="2" y1="12" x2="6" y2="12"></line>
+            <line x1="18" y1="12" x2="22" y2="12"></line>
+            <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
+            <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+          </svg>
+          Connexion en cours...
+        </span>
+      </button>
+
+      <!-- Lien d'inscription -->
+      <div class="form-footer">
+        <p>Pas encore de compte ? <a href="/register" class="link">S'inscrire</a></p>
+      </div>
+    </form>
   </div>
-  <div>
-    <label>Password</label>
-    <input type="password" name="password" [(ngModel)]="credentials.password" required />
-  </div>
-  <button type="submit">Login</button>
-</form>
+</div>
+
+<style>
+  .login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+  }
+
+  .login-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 440px;
+    padding: 40px;
+  }
+
+  .login-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .login-header h2 {
+    margin: 0 0 8px 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a202c;
+  }
+
+  .login-header p {
+    margin: 0;
+    color: #718096;
+    font-size: 14px;
+  }
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .alert {
+    padding: 12px 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+  }
+
+  .alert-error {
+    background-color: #fee;
+    color: #c53030;
+    border: 1px solid #fc8181;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d3748;
+  }
+
+  .input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .input-icon {
+    position: absolute;
+    left: 12px;
+    color: #a0aec0;
+    pointer-events: none;
+  }
+
+  .input-wrapper input {
+    width: 100%;
+    padding: 12px 12px 12px 44px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: all 0.2s;
+    outline: none;
+  }
+
+  .input-wrapper input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  }
+
+  .input-wrapper input.invalid {
+    border-color: #fc8181;
+  }
+
+  .input-wrapper input::placeholder {
+    color: #cbd5e0;
+  }
+
+  .toggle-password {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #a0aec0;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+  }
+
+  .toggle-password:hover {
+    color: #667eea;
+  }
+
+  .error-message {
+    font-size: 13px;
+    color: #e53e3e;
+    margin-top: 4px;
+  }
+
+  .form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+  }
+
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: #4a5568;
+  }
+
+  .checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+
+  .link {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .link:hover {
+    color: #764ba2;
+    text-decoration: underline;
+  }
+
+  .btn-submit {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 8px;
+  }
+
+  .btn-submit:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
+  }
+
+  .btn-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .spinner {
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .form-footer {
+    text-align: center;
+    margin-top: 8px;
+    font-size: 14px;
+    color: #718096;
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .login-card {
+      padding: 24px;
+    }
+
+    .login-header h2 {
+      font-size: 24px;
+    }
+
+    .form-options {
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+    }
+  }
+</style>

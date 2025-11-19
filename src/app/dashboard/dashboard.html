@@ -1,3 +1,190 @@
-<h2>Dashboard Étudiant</h2>
-<p>Bienvenue {{student.nom}} {{student.prenom}}</p>
-<button (click)="logout()">Déconnexion</button>
+<div class="container-fluid py-4">
+  <!-- En-tête avec bienvenue -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card shadow-sm border-0 bg-gradient-primary text-white">
+        <div class="card-body">
+          <h2 class="mb-2">
+            <i class="bi bi-person-circle"></i> 
+            Bienvenue {{student.nom}} {{student.prenom}}
+          </h2>
+          <p class="mb-0 opacity-75">Tableau de bord étudiant</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cartes d'action -->
+  <div class="row g-4">
+    <!-- Carte Voir les Cours -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 shadow-sm border-0 hover-card" (click)="goToCourses()" style="cursor: pointer;">
+        <div class="card-body text-center p-4">
+          <div class="icon-box bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" 
+               style="width: 80px; height: 80px;">
+            <i class="bi bi-book-fill text-primary" style="font-size: 2.5rem;"></i>
+          </div>
+          <h4 class="card-title mb-2">📚 Mes Cours</h4>
+          <p class="card-text text-muted">
+            Consulter le planning des cours et les contenus pédagogiques
+          </p>
+          <button class="btn btn-primary mt-2">
+            Voir les cours <i class="bi bi-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Carte Mes Absences & Présences -->
+<div class="col-md-6 col-lg-4">
+  <div class="card h-100 shadow-sm border-0 hover-card" style="cursor: pointer;">
+    <div class="card-body text-center p-4" (click)="goToMyAttendance()">
+      <div class="icon-box bg-danger bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" 
+           style="width: 80px; height: 80px;">
+        <i class="bi bi-calendar-check text-danger" style="font-size: 2.5rem;"></i>
+      </div>
+      <h4 class="card-title mb-2">📅 Mes absences & présences</h4>
+      <p class="card-text text-muted">
+        Consulter mes présences et absences par cours et par date
+      </p>
+      <button class="btn btn-danger mt-2">
+        Voir mes présences <i class="bi bi-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+    <!-- Carte Mes Progrès -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 shadow-sm border-0 hover-card" style="cursor: pointer;">
+        <div class="card-body text-center p-4">
+          <div class="icon-box bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" 
+               style="width: 80px; height: 80px;">
+            <i class="bi bi-graph-up-arrow text-success" style="font-size: 2.5rem;"></i>
+          </div>
+          <h4 class="card-title mb-2">📈 Mes Progrès</h4>
+          <p class="card-text text-muted">
+            Suivre mon évolution et mes accomplissements
+          </p>
+          <button class="btn btn-success mt-2">
+            Voir mes progrès <i class="bi bi-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carte Planning -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 shadow-sm border-0 hover-card" style="cursor: pointer;">
+        <div class="card-body text-center p-4">
+          <div class="icon-box bg-info bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" 
+               style="width: 80px; height: 80px;">
+            <i class="bi bi-calendar-week text-info" style="font-size: 2.5rem;"></i>
+          </div>
+          <h4 class="card-title mb-2">📅 Planning</h4>
+          <p class="card-text text-muted">
+            Consulter mon emploi du temps hebdomadaire
+          </p>
+          <button class="btn btn-info mt-2">
+            Voir le planning <i class="bi bi-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carte Notifications -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 shadow-sm border-0 hover-card" style="cursor: pointer;">
+        <div class="card-body text-center p-4">
+          <div class="icon-box bg-warning bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" 
+               style="width: 80px; height: 80px;">
+            <i class="bi bi-bell-fill text-warning" style="font-size: 2.5rem;"></i>
+          </div>
+          <h4 class="card-title mb-2">🔔 Notifications</h4>
+          <p class="card-text text-muted">
+            Consulter mes messages et annonces
+          </p>
+          <span class="badge bg-danger position-absolute top-0 end-0 m-3">3</span>
+          <button class="btn btn-warning mt-2">
+            Voir les notifications <i class="bi bi-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carte Ressources -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 shadow-sm border-0 hover-card" style="cursor: pointer;">
+        <div class="card-body text-center p-4">
+          <div class="icon-box bg-purple bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" 
+               style="width: 80px; height: 80px;">
+            <i class="bi bi-folder-fill text-purple" style="font-size: 2.5rem;"></i>
+          </div>
+          <h4 class="card-title mb-2">📁 Ressources</h4>
+          <p class="card-text text-muted">
+            Accéder aux documents et supports de cours
+          </p>
+          <button class="btn btn-secondary mt-2">
+            Voir les ressources <i class="bi bi-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carte Déconnexion -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 shadow-sm border-0 hover-card" style="cursor: pointer;">
+        <div class="card-body text-center p-4">
+          <div class="icon-box bg-danger bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" 
+               style="width: 80px; height: 80px;">
+            <i class="bi bi-box-arrow-right text-danger" style="font-size: 2.5rem;"></i>
+          </div>
+          <h4 class="card-title mb-2">🚪 Déconnexion</h4>
+          <p class="card-text text-muted">
+            Se déconnecter du compte en toute sécurité
+          </p>
+          <button class="btn btn-outline-danger mt-2" (click)="logout()">
+            Se déconnecter <i class="bi bi-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section statistiques rapides (optionnelle) -->
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title mb-3">📊 Aperçu rapide</h5>
+          <div class="row text-center">
+            <div class="col-md-3">
+              <div class="p-3">
+                <h3 class="text-primary mb-1">12</h3>
+                <small class="text-muted">Cours suivis</small>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="p-3">
+                <h3 class="text-success mb-1">85%</h3>
+                <small class="text-muted">Taux de présence</small>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="p-3">
+                <h3 class="text-info mb-1">5</h3>
+                <small class="text-muted">Sourates mémorisées</small>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="p-3">
+                <h3 class="text-warning mb-1">3</h3>
+                <small class="text-muted">Cours cette semaine</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -16,13 +16,16 @@ export class LoginComponent {
     email: '',
     password: ''
   };
-
+showPassword = false;
+rememberMe = false;
+isLoading = false;
+errorMessage = '';
   constructor(private authService: AuthService, private router: Router) {}
 onSubmit() {
   console.log('Tentative de connexion avec :', this.credentials);
 
   // 🔹 Cas admin
-  if (this.credentials.email === 'admin@gmail.com' && this.credentials.password === 'admin') {
+  if (this.credentials.email === 'admin@gmail.com' && this.credentials.password === 'admin1') {
     // redirection vers la page des étudiants
     this.router.navigate(['/students']);
     return; // on stop ici pour ne pas appeler le backend

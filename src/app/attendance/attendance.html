@@ -1,0 +1,40 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-3">📖 Gestion des présences</h2>
+
+  <!-- Selection du cours -->
+  <div class="mb-4">
+    <label class="form-label fw-bold">Choisir un cours :</label>
+    <select class="form-select" [(ngModel)]="selectedCourse">
+      <option *ngFor="let c of courses" [ngValue]="c">
+        {{ c.title }} - {{ c.day }} ({{ c.type }})
+      </option>
+    </select>
+  </div>
+
+  <div *ngIf="selectedCourse">
+    <h4 class="mb-3">Étudiants du cours : <b>{{ selectedCourse.title }}</b></h4>
+
+    <table class="table table-bordered table-hover text-center">
+      <thead class="table-dark">
+        <tr>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Présence</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of students">
+          <td>{{ s.nom }}</td>
+          <td>{{ s.prenom }}</td>
+          <td>
+            <button class="btn btn-success btn-sm me-2"
+              (click)="markAttendance(s, 'PRESENT')">Présent</button>
+
+            <button class="btn btn-danger btn-sm"
+              (click)="markAttendance(s, 'ABSENT')">Absent</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

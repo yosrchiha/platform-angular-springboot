@@ -1,0 +1,45 @@
+<div class="container my-5">
+  <!-- Header et bouton accueil -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">📅 Mes présences et absences</h2>
+    <button class="btn btn-primary" (click)="goHome()">
+      🏠 Accueil
+    </button>
+  </div>
+
+  <!-- Résumé des absences par mois sous forme de cartes -->
+  <div class="row mb-5">
+    <div class="col-md-3 mb-3" *ngFor="let month of months">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title">{{ monthName(month) }}</h5>
+          <p class="card-text display-6 text-danger">{{ absencesByMonth[month] }}</p>
+          <small class="text-muted">absence(s)</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tableau détaillé des présences -->
+  <div class="table-responsive shadow-sm rounded">
+    <table class="table table-hover table-bordered text-center align-middle mb-0">
+      <thead class="table-dark">
+        <tr>
+          <th>Course ID</th>
+          <th>Date</th>
+          <th>Statut</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of attendances" [ngClass]="{'table-success': a.status==='PRESENT', 'table-danger': a.status==='ABSENT'}">
+          <td>{{ a.course.id }}</td>
+          <td>{{ a.date | date:'yyyy-MM-dd' }}</td>
+          <td class="fw-bold">
+            <span *ngIf="a.status==='PRESENT'">🟢 Présent</span>
+            <span *ngIf="a.status==='ABSENT'">🔴 Absent</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
